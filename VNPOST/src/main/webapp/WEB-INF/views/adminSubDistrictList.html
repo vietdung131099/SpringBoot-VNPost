@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <script th:href="@{/templates/admin/assets/js/ace-extra.min.js}" ></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/templates/admin/js/jquery-2.2.3.min.js}" />'></script>
+    <script th:src="@{/templates/admin/assets/js/jquery.2.1.1.min.js}" ></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- sweet alert -->
+    <script th:src="@{/templates/admin/sweetalert/sweetalert2.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/templates/admin/sweetalert/sweetalert2.min.css}" />
+
+
+</head>
+<body class="no-skin">
+
+<!-- header -->
+<div id="navbar" class="navbar navbar-default ace-save-state" th:insert="~{/common/admin/header.html::header}"></div>
+<!-- header -->
+
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<!-- menu -->
+<div id="sidebar" class="sidebar responsive ace-save-state" th:insert="~{/common/admin/menu.html::menu}"></div>
+<!-- menu -->
+
+<!-- main content -->
+<div class="main-content">
+    <form id="formSubmit" th:action="@{/admin/danh-sach/phuong}" method="get">
+
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="/trang-chu">Trang chủ</a>
+                    </li>
+                </ul>
+                <!-- /.breadcrumb -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box table-filter">
+                            <div class="table-btn-controls">
+
+                                <input sec:authorize="hasAuthority('Tìm kiếm phường / xã')" id="contentSearch" type="text"> <!-- tìm kiếm theo tiêu đề -->
+                                <button sec:authorize="hasAuthority('Tìm kiếm phường / xã')" id="search" class="btn btn-primary">Tìm kiếm</button>
+
+                                <div class="pull-right tableTools-container">
+                                    <div class="dt-buttons btn-overlap btn-group">
+                                        <a flag="info"
+                                           class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle="tooltip"
+                                           title='Thêm Phường' sec:authorize="hasAuthority('Thêm phường / xã')" href='/admin/chinh-sua/phuong'>
+                                        <span>
+                                            <i class="fa fa-plus-circle bigger-110 purple"></i>
+                                        </span>
+                                        </a>
+                                        <button id="btnDelete" type="button"
+                                                class="dt-button buttons-html5 btn btn-white btn-primary btn-bold" data-toggle="tooltip"
+                                                title='Xóa Phường' sec:authorize="hasAuthority('Xóa phường / xã')" onclick="warningBeforeDelete();">
+                                        <span>
+                                            <i class="fa fa-trash-o bigger-110 pink"></i>
+                                        </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th sec:authorize="hasAuthority('Xóa phường / xã')"></th>
+                                            <th>Mã</th>
+                                            <th>Tên</th>
+                                            <th>Tên tiếng anh</th>
+                                            <th>Huyện / quận</th>
+                                            <th>Tỉnh / thành phố</th>
+                                            <th>Cấp</th>
+                                            <th sec:authorize="hasAnyAuthority('Sửa phường / xã','Xóa 1 phường / xã')">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="resultSearch">
+                                            <tr th:each="subDistrict : ${subDistricts.data}">
+                                                <td sec:authorize="hasAuthority('Xóa phường / xã')"><input type="checkbox" th:value="${subDistrict.id}"></td>
+                                                <td th:text="${subDistrict.id}"></td>
+                                                <td th:text="${subDistrict.name}"></td>
+                                                <td th:text="${subDistrict.nameEnglish}"></td>
+                                                <td th:text="${subDistrict.nameDistrict}"></td>
+                                                <td th:text="${subDistrict.nameCity}"></td>
+                                                <td th:text="${subDistrict.level}"></td>
+                                                <td sec:authorize="hasAnyAuthority('Sửa phường / xã','Xóa 1 phường / xã')">
+                                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                       title="Cập nhật phường" sec:authorize="hasAuthority('Sửa phường / xã')" th:href='@{/admin/chinh-sua/phuong/{id}(id = ${subDistrict.id}) }'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                                       title="Xóa phường" sec:authorize="hasAuthority('Xóa 1 phường / xã')" th:onclick="deleteOneSubDistrict([[${subDistrict.id}]])"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <!--chỗ phân trang -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination" id="pagination"></ul>
+                                        <input type="hidden" id="page" name="page">
+                                        <input type="hidden" id="size" name="size">
+                                    </nav>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /.main-content -->
+
+
+<!-- footer -->
+<div th:insert="~{common/admin/footer.html::footer}"></div>
+<!-- footer -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+</div>
+
+<script th:inline="javascript">
+
+    function deleteOneSubDistrict(id){
+        let ids = [];
+        ids[0] = id;
+        deleteSubDistrict(ids);
+    }
+
+    $('#search').click(function (e){
+        e.preventDefault();
+        let data = $('#contentSearch').val();
+        $.ajax({
+            url : '/api/searchSubDistricts',
+            type: 'POST',
+            contentType: 'application/json',
+            data : data,
+            dataType: 'json',
+            success : function (result) {
+                let s = "";
+                result.forEach(function (dt) {
+                    s += "<tr>";
+                    if([[${#authorization.expression('hasAuthority(''Xóa phường / xã'')')}]]){
+                        s += "<td>"+'<input type="checkbox" value="'+dt.id+'">'+"</td>";
+                    }
+                    s += "<td>"+dt.id+"</td>"+
+                        "<td>"+dt.name+"</td>"+
+                        "<td>"+dt.nameEnglish+"</td>"+
+                        "<td>"+dt.nameDistrict+"</td>"+
+                        "<td>"+dt.nameCity+"</td>"+
+                        "<td>"+dt.level+"</td>";
+
+                    if([[${#authorization.expression('hasAnyAuthority(''Sửa phường / xã'',''Xóa 1 phường / xã'')')}]]){
+                        s+="<td>";
+                        if([[${#authorization.expression('hasAuthority(''Sửa phường / xã'')')}]]) {
+                            s +=  ' <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"\n' +
+                                ' title="Cập nhật phường" href="' + "/admin/chinh-sua/phuong/" + dt.id + " " + '" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>\n' +
+                                ' </a>';
+                        }
+
+                        if([[${#authorization.expression('hasAuthority(''Xóa 1 phường / xã'')')}]]) {
+                            s +=  ' <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"\n' +
+                                'onclick="deleteOneSubDistrict(\''+dt.id+'\')"' +
+                                ' title="Xóa phường" > <i class="fa fa-trash-o" aria-hidden="true"></i>\n' +
+                                ' </a>';
+                        }
+                        s += "</td>"+ "</tr>";
+                    }
+                });
+
+                $('#resultSearch').html(s);
+            },
+            error : function () {
+                alert('Lỗi');
+            }
+        });
+    });
+
+    function warningBeforeDelete() {
+        swal({
+            title: "Xác nhận xóa?",
+            text: "Bạn có chắc chắn muốn xóa hay không",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            cancelButtonClass: "btn-danger",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Hủy bỏ",
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                var ids = $('tbody input[type=checkbox]:checked').map(function () {
+                    return $(this).val();
+                }).get();
+
+                deleteSubDistrict(ids);
+            }
+        });
+    }
+
+    function deleteSubDistrict(data){
+        $.ajax({
+            url: '/api/subDistrict',
+            method: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (){
+                alert('delete success');
+                window.location.href = '/admin/danh-sach/phuong?page=1&size=10';
+            },
+            error: function (){
+                alert('delete fail');
+            }
+        });
+    }
+
+    let currentPage = [[${subDistricts.page}]];
+    $(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: 10,
+            visiblePages: 5,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+                if(currentPage != page){
+                    $('#page').val(page);
+                    $('#size').val(10);
+                    $('#formSubmit').submit();
+                }
+            }
+        });
+    });
+
+</script>
+
+
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery-ui.custom.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.ui.touch-punch.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.easypiechart.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.sparkline.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.pie.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.resize.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace-elements.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+</body>
+</html>

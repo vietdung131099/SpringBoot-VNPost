@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="menu">
+<div id="sidebar" class="sidebar responsive ace-save-state">
+    <script type="text/javascript">
+        try{ace.settings.loadState('sidebar')}catch(e){}
+    </script>
+    <div class="sidebar-shortcuts">
+        <div class="sidebar-shortcuts-large">
+            <button class="btn btn-success">
+                <i class="ace-icon fa fa-signal"></i>
+            </button>
+
+            <button class="btn btn-info">
+                <i class="ace-icon fa fa-pencil"></i>
+            </button>
+
+            <button class="btn btn-warning">
+                <i class="ace-icon fa fa-users"></i>
+            </button>
+
+            <button class="btn btn-danger">
+                <i class="ace-icon fa fa-cogs"></i>
+            </button>
+        </div>
+        <div class="sidebar-shortcuts-mini">
+            <span class="btn btn-success"></span>
+
+            <span class="btn btn-info"></span>
+
+            <span class="btn btn-warning"></span>
+
+            <span class="btn btn-danger"></span>
+        </div>
+    </div>
+    <ul class="nav nav-list">
+        <li >
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list"></i>
+                <span class="menu-text"></span>
+                Quản lý chức năng
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li sec:authorize="hasAuthority('Xem tin tức')">
+                    <a href='/admin/danh-sach/tin-tuc?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách tin tức
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem dịch vụ')">
+                    <a href='/admin/danh-sach/chi-tiet/dich-vu?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách dịch vụ
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem nhóm quyền')">
+                    <a href='/admin/danh-sach/nhom-quyen?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách nhóm quyền
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem người dùng')">
+                    <a href='/admin/danh-sach/nguoi-dung?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách người dùng
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem thành phố / tỉnh')">
+                    <a href='/admin/danh-sach/thanh-pho?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách Tỉnh / thành phố
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem quận / huyện')">
+                    <a href='/admin/danh-sach/quan?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách Huyện / quận
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('Xem phường / xã')">
+                    <a href='/admin/danh-sach/phuong?page=1&size=10'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Danh sách Xã / phường
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div class="sidebar-toggle sidebar-collapse">
+        <i class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+    </div>
+</div>
+</body>
+</html>

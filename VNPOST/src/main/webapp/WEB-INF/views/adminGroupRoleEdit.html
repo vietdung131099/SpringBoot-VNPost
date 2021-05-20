@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <script th:href="@{/templates/admin/assets/js/ace-extra.min.js}" ></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/templates/admin/js/jquery-2.2.3.min.js}" />'></script>
+    <script th:src="@{/templates/admin/assets/js/jquery.2.1.1.min.js}" ></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--    &lt;!&ndash; sweet alert &ndash;&gt;-->
+    <!--    <script th:src="@{/templates/admin/sweetalert/sweetalert2.min.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{/templates/admin/sweetalert/sweetalert2.min.css}" />-->
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+
+<!--    <link th:href="@{/templates/admin/css/sb-admin-2.min.css}" rel="stylesheet">-->
+
+</head>
+<body class="no-skin">
+
+<!-- header -->
+<div id="navbar" class="navbar navbar-default ace-save-state" th:insert="~{common/admin/header.html::header}"></div>
+<!-- header -->
+
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<!-- menu -->
+<div id="sidebar" class="sidebar responsive ace-save-state" th:insert="~{/common/admin/menu.html::menu}"></div>
+<!-- menu -->
+
+<!-- main content -->
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/admin/trang-chu">Home</a>
+                </li>
+
+                <li>
+                    <a href='/admin/danh-sach/nhom-quyen?page=1&size=10'>Danh sách</a>
+                </li>
+                <li class="active">Chỉnh sửa</li>
+            </ul><!-- /.breadcrumb -->
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <form class="form-horizontal" id="formSubmit">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Mã nhóm quyền : </label>
+                            <div class="col-sm-9">
+                                <input th:unless="${roleGroup.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" name="id" disabled/>
+
+                                <input th:if="${roleGroup.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" name="id" th:value="${roleGroup.id}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Tên nhóm quyền : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Title" class="form-control col-xs-10 col-sm-5" name="name" th:value="${roleGroup.name}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" >Mô tả :</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control col-xs-10 col-sm-5" rows="5" cols="10" name="description" th:field="${roleGroup.description}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Quyền :</label>
+                            <div class="col-sm-9">
+
+                                <ul class="sidebar-shortcuts" id="accordionSidebar1">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                                           aria-expanded="true" aria-controls="collapseTwo">
+                                            <span style="color: black;">Danh mục Thành Phố/Tỉnh</span>
+                                        </a>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar1">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+                                                <input type="checkbox" name="roleId" value="13" th:checked="${check.get(13)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="14" th:checked="${check.get(14)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="15" th:checked="${check.get(15)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="34" th:checked="${check.get(34)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="35" th:checked="${check.get(35)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="33" th:checked="${check.get(33)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="sidebar-shortcuts" id="accordionSidebar2">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                                           aria-expanded="true" aria-controls="collapseUtilities">
+                                            <span style="color: black;">Danh mục Quận/Huyện</span>
+                                        </a>
+                                        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                                             data-parent="#accordionSidebar2">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+                                                <input type="checkbox" name="roleId" value="10" th:checked="${check.get(10)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" id="vehicle5" name="roleId" value="11" th:checked="${check.get(11)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" id="vehicle6" name="roleId" value="12" th:checked="${check.get(12)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="31" th:checked="${check.get(31)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="32" th:checked="${check.get(32)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="30" th:checked="${check.get(30)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="sidebar-shortcuts" id="accordionSidebar3">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                           aria-expanded="true" aria-controls="collapsePages">
+                                            <span style="color: black;">Danh mục Phường/Xã</span>
+                                        </a>
+                                        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar3">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+                                                <input type="checkbox" name="roleId" value="7" th:checked="${check.get(7)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="8" th:checked="${check.get(8)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="9" th:checked="${check.get(9)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="28" th:checked="${check.get(28)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="29" th:checked="${check.get(29)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="27" th:checked="${check.get(27)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="sidebar-shortcuts" id="accordionSidebar4">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
+                                           aria-expanded="true" aria-controls="collapsePages1">
+                                            <span style="color: black;">Danh mục Tin tức</span>
+                                        </a>
+                                        <div id="collapsePages1" class="collapse" aria-labelledby="headingPages"
+                                             data-parent="#accordionSidebar4">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+                                                <input type="checkbox" name="roleId" value="4" th:checked="${check.get(4)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="5" th:checked="${check.get(5)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="6" th:checked="${check.get(6)}">
+                                                <label>Xóa nhiền bản ghi</label><br> <!-- xóa -->
+
+                                                <input type="checkbox" name="roleId" value="25" th:checked="${check.get(25)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="26" th:checked="${check.get(26)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="24" th:checked="${check.get(24)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="sidebar-shortcuts" id="accordionSidebar5">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
+                                           aria-expanded="true" aria-controls="collapsePages1">
+                                            <span style="color: black;">Danh mục Dịch vụ</span>
+                                        </a>
+                                        <div id="collapsePages3" class="collapse" aria-labelledby="headingPages"
+                                             data-parent="#accordionSidebar4">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+                                                <input type="checkbox" name="roleId" value="1" th:checked="${check.get(1)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="2" th:checked="${check.get(2)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="3" th:checked="${check.get(3)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="23" th:checked="${check.get(23)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="22" th:checked="${check.get(22)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                                <ul class="sidebar-shortcuts" id="accordionSidebar6">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4"
+                                           aria-expanded="true" aria-controls="collapsePages1">
+                                            <span style="color: black;">Danh mục nhóm quyền</span>
+                                        </a>
+                                        <div id="collapsePages4" class="collapse" aria-labelledby="headingPages"
+                                             data-parent="#accordionSidebar6">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+
+                                                <input type="checkbox" name="roleId" value="19" th:checked="${check.get(19)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="20" th:checked="${check.get(20)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="21" th:checked="${check.get(21)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="40" th:checked="${check.get(40)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="41" th:checked="${check.get(41)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="39" th:checked="${check.get(39)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="sidebar-shortcuts" id="accordionSidebar7">
+                                    <li class="nav-item">
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5"
+                                           aria-expanded="true" aria-controls="collapsePages1">
+                                            <span style="color: black;">Danh mục người dùng</span>
+                                        </a>
+                                        <div id="collapsePages5" class="collapse" aria-labelledby="headingPages"
+                                             data-parent="#accordionSidebar7">
+                                            <div class="bg-white py-2 collapse-inner rounded" style="padding-left: 20px;">
+
+                                                <input type="checkbox" name="roleId" value="16" th:checked="${check.get(16)}">
+                                                <label>Thêm</label><br>
+                                                <input type="checkbox" name="roleId" value="17" th:checked="${check.get(17)}">
+                                                <label>Sửa</label><br>
+                                                <input type="checkbox" name="roleId" value="18" th:checked="${check.get(18)}">
+                                                <label>Xóa</label><br>
+
+                                                <input type="checkbox" name="roleId" value="37" th:checked="${check.get(37)}">
+                                                <label>Xóa 1 bản ghi</label><br> <!-- xóa 1 -->
+                                                <input type="checkbox" name="roleId" value="38" th:checked="${check.get(38)}">
+                                                <label>Tìm kiếm</label><br>
+                                                <input type="checkbox" name="roleId" value="36" th:checked="${check.get(36)}">
+                                                <label>Xem danh sách</label><br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+                                <div class="clearfix">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button th:unless="${roleGroup.id}" class="btn btn-info" type="button" id="submit">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            Thêm nhóm quyền
+                                        </button>
+
+                                        <button th:if="${roleGroup.id}" class="btn btn-info" type="button" id="submit">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            Sửa nhóm quyền
+                                        </button>
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            Hủy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+
+<!-- footer -->
+<div th:insert="~{common/admin/footer.html::footer}"></div>
+<!-- footer -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+
+<script th:inline="javascript">
+    let id = [[${roleGroup.id}]];
+    $('#submit').click(function (e){
+        e.preventDefault();
+        let data = {};
+        let roleId = [];
+        let dataForm = $('#formSubmit').serializeArray();
+        $.each(dataForm,function (i,v){
+            if(v.name === 'roleId'){
+                roleId.push(v.value);
+            } else {
+                data[""+v.name+""] = v.value;
+            }
+        });
+        data["roleId"] = roleId;
+
+        if(id === 0){
+            addRoleGroup(data);
+        } else {
+            editRoleGroup(data);
+        }
+
+    });
+
+    function addRoleGroup(data) {
+        $.ajax({
+           url : '/api/roleGroup',
+           type : 'POST',
+           contentType : 'application/json',
+           data : JSON.stringify(data),
+           success : function (){
+               alert('Add success');
+               window.location.href = '/admin/danh-sach/nhom-quyen?page=1&size=10';
+           },
+           error : function (){
+               alert('Add fail');
+           }
+        });
+    }
+
+    function editRoleGroup(data) {
+        $.ajax({
+            url : '/api/roleGroup',
+            type : 'PUT',
+            contentType : 'application/json',
+            data : JSON.stringify(data),
+            success : function (){
+                alert('Update success');
+                window.location.href = '/admin/danh-sach/nhom-quyen?page=1&size=10';
+            },
+            error : function (){
+                alert('Update fail');
+            }
+        });
+    }
+
+</script>
+</div>
+
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery-ui.custom.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.ui.touch-punch.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.easypiechart.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.sparkline.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.pie.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.resize.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace-elements.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/styleService.css}">
+
+    <!-- thư viện phân trang -->
+    <script th:src="@{/templates/admin/paging/jquery.twbsPagination.js}" type="text/javascript"></script>
+
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert="~{common/web/header::header}"></div>
+
+<!--phần content-->
+<div class="container content-service">
+    <h1 class="text-center" th:text="${serviceCompanyName}"></h1>
+    <hr>
+
+    <form id="formSubmit" th:action="@{/dich-vu/{id} (id = ${id}) }">
+        <div class="row">
+            <div class="col-md-4 col-sm-4  content-main" th:each="item :${detailServices.data}">
+                <a th:href="@{/chi-tiet-dich-vu/{id}(id=${item.id})}">
+                    <img class="img-fluid" th:src="${item.thumbnail}">
+                    <h2 th:text="${item.title}"></h2>
+                </a>
+                <p th:text="${item.description}"></p>
+            </div>
+        </div>
+        <!--chỗ phân trang -->
+        <nav aria-label="Page navigation" style="padding-top: 50px;">
+            <ul class="pagination" id="pagination"></ul>
+            <input type="hidden" name="page" id="page">
+            <input type="hidden" name="size" id="size">
+        </nav>
+    </form>
+
+</div>
+
+<!-- footer -->
+<div th:insert="~{common/web/footer::footer}"></div>
+
+<script type="text/javascript" th:inline="javascript">
+
+    let currentPage = [[${detailServices.page}]];
+    $(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: 5,
+            visiblePages: 2,
+            startPage : currentPage,
+            onPageClick: function (event, page) {
+                if(currentPage != page){
+                    $('#page').val(page);
+                    $('#size').val(6);
+                    $('#formSubmit').submit();
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

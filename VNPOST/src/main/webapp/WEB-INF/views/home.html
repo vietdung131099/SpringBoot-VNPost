@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/style.css}">
+
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert= "~{/common/web/header.html::header}"></div>
+
+
+
+<!-- Carousel là cái nó cứ nhảy ảnh đi nhảy ảnh lại -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+        <li data-target="#slides" data-slide-to="3"></li>
+        <li data-target="#slides" data-slide-to="4"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img th:src="@{/templates/web/img/Banner giai chay.png}">
+        </div>
+        <div class="carousel-item">      <!-- các cái thông tin của carousel-->
+            <img th:src="@{/templates/web/img/Banner web.jpg}">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/templates/web/img/Banner Cong PostGreen.jpg}">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/templates/web/img/Banner-032017-2.png}">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/templates/web/img/Banner-032017.png}">
+        </div>
+    </div>
+</div>
+
+<!-- phần nội dung chính -->
+<div class="container-fluid">
+    <div class="container main-content" style="padding: 50px 0px;">
+        <div class="row">
+            <div class="col-sm-4 main-content-left">
+                <h2 style="font-size: 18px; font-weight: bold;">CHUYÊN TRANG</h2>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/Recycle.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/newspaper.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/quan-ly-chat-luong.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/stamp.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/thi-dua-khen-thuong.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/folder.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/Icon-Dang.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="icon-content text-center">
+                            <img class="img-fluid" th:src="@{/templates/web/img/list-top.png}">
+                        </div>
+                        <a href="/404">
+                            <p>
+                                <span>Nói không với rác thải nhựa</span><br>
+                                Bưu điện Việt Nam vì một cuộc sống xanh
+                            </p>
+                        </a>
+
+                        <i class="fa fa-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-8 main-content-right">
+                <h2>TIN TỨC</h2>
+
+                <div class="row">
+
+                    <div id="changeContent" class="col-md-6">
+                        <img class="img-fluid" th:src="@{/templates/web/img/tintuc1.jpg}">
+
+                        <a href="/chi-tiet-tin-tuc/51">
+                            <p id="title" style="font-size: 15px; font-weight: bold; margin-bottom: 5px;">
+                                Hơn 200kg vải thiều Thanh Hà được tiêu thụ trong ngày đầu lên sàn Postmart
+                            </p>
+                        </a>
+                        <p style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #bababa;">08/04/2021</p>
+                        <p id="content" style="font-size: 15px;">
+                            Ngày 18/5, UBND tỉnh Hải Dương phối hợp Bộ Công thương, Bộ Nông nghiệp và Phát triển nông thôn tổ chức Hội nghị kết nối,
+                            xúc tiến tiêu thụ vải thiều Thanh Hà và nông sản tiêu biểu...
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 hihi">
+                        <div class="row" th:each="blog : ${blogs}" th:id="${blog.id}">
+                            <div class="col-4">
+                                <img class="img-fluid" th:src="${blog.thumbnail}">
+                            </div>
+                            <div class="col-8">
+                                <a th:href="@{/chi-tiet-tin-tuc/{id} (id=${blog.id})}">
+                                    <p th:text="${blog.title}"></p>
+                                </a>
+                                <p style="font-size: 13px; color: #bababa;">
+                                    09/04/2021
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script th:inline="javascript">
+                        let data = [[${blogs}]];
+                        let ids = [];
+                        let thumbnail = [];
+                        let title = [];
+                        let description = [];
+
+                        data.forEach(function (result){
+                            thumbnail.push(result.thumbnail);
+                            title.push(result.title);
+                            description.push(result.description);
+                            ids.push(result.id);
+                        });
+
+                        let index = 0;
+                        let change = function (){
+                            if(index==0){
+                                document.getElementById(""+ids[4]+"").style.background = 'white';
+                            } else {
+                                document.getElementById(""+ids[index-1]+"").style.background = 'white';
+
+                            }
+                            document.getElementById(""+ids[index]+"").style.background = '#FCB71E';
+                            $('#changeContent img').attr("src",thumbnail[index]);
+                            $('#title').text(title[index]);
+                            $('#content').text(description[index]);
+                            $('#changeContent a').attr('href','/chi-tiet-tin-tuc/'+ids[index]);
+
+                            index++;
+                            if(index==5){
+                                index = 0;
+                            }
+
+                        }
+                        setInterval(change,2000);
+
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- phần hình tròn -->
+<div class="container-fluid" style="background-color:#f6f6f6;">
+    <div class="container content-down">
+        <div class="row">
+
+            <div class="col-sm-4">
+                <a href="/buu-chinh-chuyen-phat">
+                    <div class="img-content text-center">
+                        <img class="img-fluid" th:src="@{/templates/web/img/1.jfif}">
+                        <h2>BƯU CHÍNH CHUYỂN PHÁT</h2>
+                        <hr class="crossbar">
+                    </div>
+                </a>
+                <div class="list-content text-left">
+                    <span>
+                        <a href="/dich-vu/1?page=1&size=6">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Bưu chính chuyển phát Trong nước
+                        </a>
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/404">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Bưu chính chuyển phát Quốc tế
+                        </a>
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-4">
+
+                <a href="/dich-vu/2?page=1&size=6">
+                    <div class="img-content text-center">
+                        <img class="img-fluid" th:src="@{/templates/web/img/2.jfif}">
+                        <h2>TÀI CHÍNH BƯU CHÍNH</h2>
+                        <hr class="crossbar">
+                    </div>
+                </a>
+
+                <div class="list-content text-left">
+                    <span>
+                        <a href="/chi-tiet-dich-vu/11">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Bảo hiểm phi nhân thọ PTI
+                        </a>
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/chi-tiet-dich-vu/12">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Thu hộ - chi hộ
+                        </a>
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/chi-tiet-dich-vu/13">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Đại lý Bảo hiểm nhân thọ (Dai-ichi)
+                        </a>
+                    </span>
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-4">
+
+                <a href="/dich-vu/3?page=1&size=6">
+                    <div class="img-content text-center">
+                        <img class="img-fluid" th:src="@{/templates/web/img/3.jfif}">
+                        <h2>PHÂN PHỐI - TRUYỀN THÔNG</h2>
+                        <hr class="crossbar">
+                    </div>
+                </a>
+                <div class="list-content text-left">
+                    <span>
+                        <a href="/chi-tiet-dich-vu/1">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Sàn thương mại điện tử POSTMART
+                        </a>
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/chi-tiet-dich-vu/2">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Truyền thông, quảng cáo
+                        </a>
+                    </span>
+                    <br>
+                    <span>
+                        <a href="/chi-tiet-dich-vu/3">
+                            <i class="fa fa-caret-right" style="font-size: 15px;"></i>
+                            Phân phối xuất bản ấn phẩm
+                        </a>
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- phần chứa video-->
+<div class="container-fluid">
+    <div class="container" style="padding: 50px 0px;">
+        <div class="row media">
+            <div class="col-md-6">
+                <h1><a href="#">THƯ VIỆN VIDEO</a></h1>
+                <div class="embed-responsive embed-responsive-16by9" style="border: 5px grey double;">
+                    <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/Dw0eMBYdlyY"></iframe>
+                </div>
+                <h2 style="font-size: 18px; color: orange; font-weight: bold; padding-top: 10px ;">Bưu điện Việt Nam - Gửi cả niềm tin</h2>
+            </div>
+
+            <div class="col-md-6" style="padding-top: 30px;">
+                <h2  style="font-size: 24px; color: #ffa500; font-weight: bold;">MUA SẮM TRỰC TUYẾN</h2>
+                <P>
+                    Hiện tại chúng tôi có những gian hàng mua sắm online với đầy đủ những sản phẩm tiện ích, đa dạng.
+                    Hy vọng sẽ đem đến cho quý khách hàng những trải nghiệm mua sắm mới mẻ nhất. Hãy đến với hệ thống
+                    mua sắm trực tuyến của chúng tôi để tìm cho mình những sản phẩm thiết thực nhất.
+                </P>
+
+                <div class="row text-center picture">
+                    <div class="col-md-4 col-4">
+                        <a href="/404">
+                            <img class="img-fluid" th:src="@{/templates/web/img/ImageCaching.jfif}">
+                            <h3>SÀN THƯƠNG MẠI ĐIỆN TỬ POSTMART</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <a href="/404">
+                            <img class="img-fluid" th:src="@{/templates/web/img/ImageCaching (1).jfif}">
+                            <h3>LỊCH TẾT</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-4">
+                        <a href="/404">
+                            <img class="img-fluid" th:src="@{/templates/web/img/ImageCaching (2).jfif}">
+                            <h3>DỊCH VỤ DATAPOST</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--phần Footer-->
+<div th:insert="~{/common/web/footer.html::footer}"></div>
+
+</body>
+</html>

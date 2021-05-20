@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body  th:fragment="header">
+<div class="container-fluid header-top">
+    <div class="container" style="padding: 5px 0px;">
+        <div class="row">
+            <div class="col-md-6 hiden-header">
+                <i class="fa fa-phone" style="padding: 2px; font-size: 13px;"></i>
+                <span style="font-size: 14px;">Đường dây nóng hỗ trợ</span>
+                <span style="font-size: 14px; font-weight: bold;">1900 54 54 81</span>
+            </div>
+            <div class="col-md-6">
+                <div class="row introduce">
+                    <div class="col-2">
+                        <a href="/404">Giới thiệu</a>
+                    </div>
+                    <div class="col-2">
+                        <a href="/404">Hỏi đáp</a>
+                    </div>
+                    <div class="col-2">
+                        <a href="/404">Liên hệ</a>
+                    </div>
+                    <div class="col-2 hiden-header">
+                        <a href="/dang-nhap" sec:authorize="isAnonymous()">Login</a>
+
+                        <a sec:authorize="isAuthenticated()" href="/404">
+                            <img class="img-fluid" th:src="@{/templates/web/img/vi-VN.gif}">
+                            <img class="img-fluid hiden-header" th:src="@{/templates/web/img/en-US.gif}">
+                        </a>
+                    </div>
+
+                    <div class="col-2">
+                        <a sec:authorize="isAnonymous()" href="/404">
+                            <img class="img-fluid" th:src="@{/templates/web/img/vi-VN.gif}">
+                            <img class="img-fluid hiden-header" th:src="@{/templates/web/img/en-US.gif}">
+                        </a>
+                        <!-- sau  khi đăng nhập thành công sẽ hiện phần dưới này -->
+                        <div sec:authorize="isAuthenticated()" style="width: 300px;" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                Welcome <b><span sec:authentication="principal.fullName"></span></b>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li style="width: 100px;">
+                                    <a href="/admin/trang-chu" class="btn btn-primary" style="color: white; width: 100px;">ADMIN</a>
+                                </li>
+                                <li>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="btn btn-danger" type="submit"  style="width: 100px;">
+                                            Đăng xuất
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-2">
+                        <input sec:authorize="isAnonymous()" type="text" placeholder="Tìm kiếm">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="container header-bot">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/trang-chu">
+                    <img class="img-fluid" th:src="@{/templates/web/img/vnpost-logo1.png}" style="width: 426px; height: 66px;">
+                </a>
+            </div>
+            <div class="col-md-6 headerService">
+                <div class="row">
+                    <a href="/404" class="col-4 col-sm-4">
+                        <div class="tron">
+                            <img class="img-fluid" th:src="@{/templates/web/img/search-price.png}">
+                        </div>
+                        <b>Tra cước</b>
+                        <h5>DỊCH VỤ</h5>
+                    </a>
+                    <a href="/404" class="col-4 col-sm-4">
+                        <div class="tron">
+                            <img class="img-fluid" th:src="@{/templates/web/img/mess.png}">
+                        </div>
+                        <b>Đánh giá &</b>
+                        <h5>KHIẾU NẠI</h5>
+                    </a>
+                    <a href="/404" class="col-4 col-sm-4">
+                        <div class="tron">
+                            <img class="img-fluid" th:src="@{/templates/web/img/recruitment.png}">
+                        </div>
+                        <b>Tin</b>
+                        <h5>TUYỂN DỤNG</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-expand-md navbar-light bg-light  thanh-menu">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="dropdown navbar-branch">
+                <a class="dropdown-toggle" data-toggle="dropdown" style="font-size: 15px; font-weight: bold; color: white; text-decoration: none;">
+                    Tra cứu - Định vị
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/danh-sach-tinh?page=1&size=10">Danh sách tỉnh</a>
+                    <a class="dropdown-item" href="#">Link 2</a>
+                    <a class="dropdown-item" href="#">Link 3</a>
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto"> <!--ml-auto : Automatically margin left-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/buu-chinh-chuyen-phat">Bưu chính chuyển phát</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dich-vu/2?page=1&size=6">Tài chính bưu chính</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dich-vu/3?page=1&size=6">Phân phối - Truyền thông</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tin-tuc">Tin tức</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/404">EMAIL</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

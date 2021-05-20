@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <script th:href="@{/templates/admin/assets/js/ace-extra.min.js}" ></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/templates/admin/js/jquery-2.2.3.min.js}" />'></script>
+    <script th:src="@{/templates/admin/assets/js/jquery.2.1.1.min.js}" ></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--    &lt;!&ndash; sweet alert &ndash;&gt;-->
+    <!--    <script th:src="@{/templates/admin/sweetalert/sweetalert2.min.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{/templates/admin/sweetalert/sweetalert2.min.css}" />-->
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+
+    <style>
+        .table-scroll{
+            display: block;
+            empty-cells: show;
+            border-spacing: 0;
+            border: 1px solid;
+            width: 200px;
+        }
+        .table-scroll thead{
+            background-color: #f1f1f1;
+            position:relative;
+            display: block;
+            width:100%;
+            overflow-y: scroll;
+        }
+        .table-scroll tbody{
+            display: block; position:relative;
+            width:100%; overflow-y:scroll;
+            border-top: 1px solid rgba(0,0,0,0.2);
+        }
+        .table-scroll tr{
+            width: 100%;
+            display:flex;
+        }
+        .table-scroll td,.table-scroll th{
+            flex-basis:100%;
+            flex-grow:2;
+            display: block;
+            padding: 1rem;
+            text-align:left;
+        }
+        .table-scroll.small-first-col td:first-child,
+        .table-scroll.small-first-col th:first-child{
+            flex-basis:20%;
+            flex-grow:1;
+        }
+        .table-scroll tbody tr:nth-child(2n){
+            background-color: rgba(130,130,170,0.1);
+        }
+        .body-half-screen{
+            max-height: 15vh;
+        }
+        .small-col{flex-basis:10%;}
+    </style>
+
+</head>
+<body class="no-skin">
+
+<!-- header -->
+<div id="navbar" class="navbar navbar-default ace-save-state" th:insert="~{common/admin/header.html::header}"></div>
+<!-- header -->
+
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<!-- menu -->
+<div id="sidebar" class="sidebar responsive ace-save-state" th:insert="~{/common/admin/menu.html::menu}"></div>
+<!-- menu -->
+
+<!-- main content -->
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/trang-chu">Home</a>
+                </li>
+
+                <li>
+                    <a href='/admin/danh-sach/nguoi-dung?page=1&size=10'>Danh sách</a>
+                </li>
+                <li class="active">Chỉnh sửa</li>
+            </ul><!-- /.breadcrumb -->
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal" id="formSubmit">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Mã : </label>
+                            <div class="col-sm-9">
+                                <input th:unless="${users.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id" disabled/>
+
+                                <input th:if="${users.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id" th:value="${users.id}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> UserName : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="UserName" class="form-control col-xs-10 col-sm-5" name="userName" th:value="${users.userName}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Password : </label>
+                            <div class="col-sm-9">
+                                <input type="password" placeholder="Password" class="form-control col-xs-10 col-sm-5" name="password" th:value="${users.password}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > FullName : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="FullName" class="form-control col-xs-10 col-sm-5" name="fullName" th:value="${users.fullName}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > Email : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Email" class="form-control col-xs-10 col-sm-5" name="email" th:value="${users.email}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > Phone : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Phone" class="form-control col-xs-10 col-sm-5" name="phone" th:value="${users.phone}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > Address : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Address" class="form-control col-xs-10 col-sm-5" name="address" th:value="${users.address}"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > Nhóm quyền: </label>
+                            <div class="col-sm-9">
+
+                                <table class="table-scroll small-first-col">
+                                    <thead>
+                                        <tr>
+                                            <th>Chọn nhóm quyền :</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="body-half-screen">
+                                        <tr th:each="roleGroup : ${roleGroups}">
+                                            <td>
+                                                <input type="checkbox" th:value="${roleGroup.id}" th:checked="${check.get(roleGroup.id)}">
+                                            </td>
+                                            <td th:text="${roleGroup.name}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button th:unless="${users.id}" class="btn btn-info" type="button" id="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Thêm người dùng
+                                </button>
+
+                                <button th:if="${users.id}" class="btn btn-info" type="button" id="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Sửa người dùng
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+
+<!-- footer -->
+<div th:insert="~{common/admin/footer.html::footer}"></div>
+<!-- footer -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+
+<script th:inline="javascript">
+
+    let id = [[${users.id}]];
+    $('#submit').click(function (e){
+        e.preventDefault();
+        data = {};
+        dataForm = $('#formSubmit').serializeArray();
+        $.each(dataForm,function (i,v){
+           data[""+v.name+""] = v.value;
+        });
+
+        console.log(data);
+
+        let roleGroupIds = $('input[type="checkbox"]:checked').map(function (){
+            return $(this).val();
+        }).get();
+        data['roleGroupIds'] = roleGroupIds;
+
+        if(id === 0){
+            addUsers(data);
+        } else {
+            editUsers(data);
+        }
+    })
+
+    function addUsers(data){
+        $.ajax({
+           url : '/api/users',
+           type : 'POST',
+           contentType : 'application/json',
+           data : JSON.stringify(data),
+           success : function (){
+               alert('Add success');
+               window.location.href = '/admin/danh-sach/nguoi-dung?page=1&size=10';
+           },
+           error : function (){
+               alert('Add fail');
+           }
+        });
+    }
+
+    function editUsers(data){
+        $.ajax({
+            url : '/api/users',
+            type : 'PUT',
+            contentType : 'application/json',
+            data : JSON.stringify(data),
+            success : function (){
+                alert('Edit success');
+                window.location.href = '/admin/danh-sach/nguoi-dung?page=1&size=10';
+            },
+            error : function (){
+                alert('Edit fail');
+            }
+        });
+    }
+</script>
+</div>
+
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery-ui.custom.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.ui.touch-punch.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.easypiechart.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.sparkline.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.pie.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.resize.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace-elements.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+</body>
+</html>

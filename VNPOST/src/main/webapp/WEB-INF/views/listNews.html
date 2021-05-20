@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNPost | Tin tức</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/styleListNews.css}">
+
+    <!--thư viện phân trang-->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <script th:src="@{/templates/admin/paging/jquery.twbsPagination.js}" type="text/javascript"></script>
+</head>
+
+<body>
+
+<!--phần Header-->
+<div th:insert="~{/common/web/header.html::header}"></div>
+
+<!-- phần nội dung -->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <!-- menu dọc -->
+                <div th:replace="~{/common/web/menu.html::menu}"></div>
+            </div>
+
+            <!--nội dung-->
+            <div class="col-lg-9 col-md-9 col-sm-9 content">
+
+                <form th:unless="${check}" id="formSubmit" th:action="@{/danh-sach-tin-tuc/the-loai/{id}(id=${id})}" method="get">
+                    <div class="container-fluid">
+                        <h2 class="text-center" style="font-size: 22px; font-weight: bold;">TIN TỨC</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 detail-content" th:each="item : ${pageResponse.data}">
+                                <a th:href="@{/chi-tiet-tin-tuc/{id} (id=${item.id}) }" th:text="${item.title}" style="font-weight: 500;"></a>
+                                <div class="row">
+                                    <a th:href="@{/chi-tiet-tin-tuc/{id} (id=${item.id}) }" class="col-sm-5">
+                                        <img class="img-fluid" th:src="${item.thumbnail}" >
+                                    </a>
+                                    <div class="col-sm-7">
+                                        <p style="margin: 0px; color: #B4B4B4;">19/04/2021 17:41</p>
+                                        <p th:text="${item.description}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--chỗ phân trang -->
+                        <nav aria-label="Page navigation" style="float: right;">
+                            <ul class="pagination" id="pagination"></ul>
+                            <input type="hidden" name="page" id="page">
+                            <input type="hidden" name="size" id="size">
+                        </nav>
+                    </div>
+                </form>
+
+                <form th:if="${check}"  id="formSubmit" th:action="@{/danh-sach-tin-tuc/{id}(id=${id})}" method="get">
+                    <div class="container-fluid">
+                        <h2 class="text-center" style="font-size: 22px; font-weight: bold;">TIN TỨC</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 detail-content" th:each="item : ${pageResponse.data}">
+                                <a th:href="@{/chi-tiet-tin-tuc/{id} (id=${item.id}) }" th:text="${item.title}" style="font-weight: 500;"></a>
+                                <div class="row">
+                                    <a th:href="@{/chi-tiet-tin-tuc/{id} (id=${item.id}) }" class="col-sm-5">
+                                        <img class="img-fluid" th:src="${item.thumbnail}" >
+                                    </a>
+                                    <div class="col-sm-7">
+                                        <p style="margin: 0px; color: #B4B4B4;">19/04/2021 17:41</p>
+                                        <p th:text="${item.description}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--chỗ phân trang -->
+                        <nav aria-label="Page navigation" style="float: right;">
+                            <ul class="pagination" id="pagination"></ul>
+                            <input type="hidden" name="page" id="page">
+                            <input type="hidden" name="size" id="size">
+                        </nav>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--phần Footer-->
+<div th:insert="~{/common/web/footer.html::footer}"></div>
+
+<script th:inline="javascript">
+
+    var currentPage = [[${pageResponse.page}]];
+    let type = [[${type}]];
+    $(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: 10,
+            visiblePages: 5,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+                if(currentPage != page){
+                    $('#page').val(page);
+                    $('#size').val(20);
+                    $('#formSubmit').submit();
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

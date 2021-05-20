@@ -1,0 +1,179 @@
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+@media(max-width:767px){
+    .main-content-left{
+        display: none;
+    }
+}
+
+@media(max-width:481px){
+
+    .headerService{
+        display: none;
+    }
+
+    .hiden-header{
+        display: none;
+    }
+}
+/*phần header top*/
+.header-top{
+    background-color: #ECECEC;
+}
+
+.introduce a{
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+}
+
+.introduce a:hover{
+    color: orange;
+}
+
+.introduce .col-2{
+    padding: 0px !important;
+}
+
+.introduce input{
+    border-radius: 15px;
+    border: 0px;
+    height: 20px;
+    font-size: 12px;
+}
+
+
+/*phần header bottom*/
+
+.tron{
+    width: 48px;
+    height: 48px;
+    border: 2px orange solid;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    margin-right: 5px;
+
+}
+
+.headerService a{
+    text-decoration: none;
+    color: black;
+    height: 48px;
+}
+
+.headerService b{
+    font-size: 14px;
+
+}
+
+.headerService h5{
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+.header-bot{
+    padding: 17px;
+}
+
+
+/*thanh menu*/
+
+.thanh-menu{
+    background-color: #FCB71E !important; /* !important : nghĩa là cho phép chèn lên các cái của bootstrap*/
+    padding: 0px;
+}
+
+.thanh-menu li a{
+    color: white !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.thanh-menu li{
+    display: inline-block;
+    padding: 0px 15px;
+}
+
+.thanh-menu li :hover{
+    background-color: #0066B1;
+}
+
+.top-footer{
+    background-color: #FCB71E;
+    color: #222;;
+}
+
+.top-footer h2{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.top-footer ul{
+    padding-left: 10px;
+}
+
+.top-footer ul li{
+    list-style: none;
+}
+
+.top-footer ul li a{
+    font-size: 15px;
+    text-decoration: none;
+    color: #222;
+}
+
+.top-footer ul li a:hover{
+    color: white;
+}
+
+.content-top-footer{
+    padding-top: 20px;
+}
+
+/*footer*/
+footer {
+    background-color: #144e8c;
+    color: white;
+    padding: 15px;
+}
+
+footer a i{
+    color: rgba(128, 128, 128, 0.514);
+    padding-right: 5px;
+}
+
+footer a i:hover{
+    color: orange;
+}
+
+/*phần nội dung*/
+.daddy{
+    padding: 30px 0px 80px 0px;
+}
+
+.son{
+    background-color: #FFFAD5;
+    border: 10px solid white;
+}
+
+.son h2{
+    color: #F58220;
+    font-size: 19px;
+    padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+

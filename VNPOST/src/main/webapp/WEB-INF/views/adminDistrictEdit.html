@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <script th:href="@{/templates/admin/assets/js/ace-extra.min.js}" ></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/templates/admin/js/jquery-2.2.3.min.js}" />'></script>
+    <script th:src="@{/templates/admin/assets/js/jquery.2.1.1.min.js}" ></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--    &lt;!&ndash; sweet alert &ndash;&gt;-->
+    <!--    <script th:src="@{/templates/admin/sweetalert/sweetalert2.min.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{/templates/admin/sweetalert/sweetalert2.min.css}" />-->
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+
+</head>
+<body class="no-skin">
+
+<!-- header -->
+<div id="navbar" class="navbar navbar-default ace-save-state" th:insert="~{common/admin/header.html::header}"></div>
+<!-- header -->
+
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<!-- menu -->
+<div id="sidebar" class="sidebar responsive ace-save-state" th:insert="~{/common/admin/menu.html::menu}"></div>
+<!-- menu -->
+
+<!-- main content -->
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/admin/trang-chu">Home</a>
+                </li>
+
+                <li>
+                    <a href='/admin/danh-sach/quan?page=1&size=10'>Danh sách</a>
+                </li>
+                <li class="active">Chỉnh sửa</li>
+            </ul><!-- /.breadcrumb -->
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal" id="formSubmit">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Mã : </label>
+                            <div class="col-sm-9">
+                                <input th:unless="${district.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id"/> <!-- thêm -->
+
+                                <input th:if="${district.id}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id" th:value="${district.id}"/>  <!-- sửa -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Tên : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Name" class="form-control col-xs-10 col-sm-5" name="name" th:value="${district.name}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Tên tiếng anh : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Name English" class="form-control col-xs-10 col-sm-5" name="nameEnglish" th:value="${district.nameEnglish}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Tên Thành phố : </label>
+                            <div class="col-sm-9">
+                                <select name="cityId">
+                                    <option th:unless="${district.id}" th:each="item : ${cities}"  th:text="${item.name}" th:value="${item.id}"></option> <!-- nếu thêm thì hiển thị cái này -->
+
+                                    <option th:if="${district.id}" th:each="item : ${cities}"  th:text="${item.name}" th:value="${item.id}" th:selected="${district.city.id == item.id }"></option> <!-- nếu sửa thì hiển thị cái này -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" > Cấp : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Level" class="form-control col-xs-10 col-sm-5" name="level" th:value="${district.level}"/>
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button th:unless="${district.id}" class="btn btn-info" type="button" id="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Thêm Quận
+                                </button>
+
+                                <button th:if="${district.id}" class="btn btn-info" type="button" id="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Sửa Quận
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+
+<!-- footer -->
+<div th:insert="~{common/admin/footer.html::footer}"></div>
+<!-- footer -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+
+<script th:inline="javascript">
+
+    let id = [[${district.id}]];
+
+    $('#submit').click(function (e){
+        e.preventDefault();
+        let data = {};
+        let dataForm = $('#formSubmit').serializeArray();
+        $.each(dataForm,function (i,v){
+            data[''+v.name+''] = v.value;
+        });
+
+        if(id === null) {
+            addDistrict(data);
+        } else {
+            editDistrict(data);
+        }
+
+    });
+
+    function addDistrict(data) {
+        $.ajax({
+           url : '/api/district',
+           type : 'POST',
+           contentType : 'application/json',
+           data : JSON.stringify(data),
+           success : function (){
+               alert('Add success');
+               window.location.href = '/admin/danh-sach/quan?page=1&size=10';
+           },
+           error : function (){
+               alert('Add fail');
+           }
+        });
+    }
+
+    function editDistrict(data) {
+        $.ajax({
+           url: '/api/district',
+           type: 'PUT',
+           contentType: 'application/json',
+           data : JSON.stringify(data),
+           success : function (){
+               alert('Edit success');
+               window.location.href = '/admin/danh-sach/quan?page=1&size=10';
+           },
+           error : function (){
+               alert('Edit fail');
+           }
+        });
+    }
+
+</script>
+</div>
+
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery-ui.custom.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.ui.touch-punch.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.easypiechart.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.sparkline.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.pie.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.resize.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace-elements.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+</body>
+</html>

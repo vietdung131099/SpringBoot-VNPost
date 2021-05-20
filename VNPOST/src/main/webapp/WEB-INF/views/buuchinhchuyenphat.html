@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/buuchinhchuyenphat.css}">
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert="~{common/web/header::header}"></div>
+
+<!--phần content-->
+<div class="container daddy">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 son">
+            <a href="/404" style="text-decoration: none;">
+                <img class="img-fluid" src="/templates/web/img/buuchinhchuyenphat1.png">
+                <h2 class="text-center">BƯU CHÍNH CHUYỂN PHÁT QUỐC TẾ</h2>
+            </a>
+        </div>
+        <div class="col-md-6 col-sm-6 son">
+            <a href="/dich-vu/1?page=1&size=6" style="text-decoration: none;">
+                <img class="img-fluid" src="/templates/web/img/buuchinhchuyenphat2.png">
+                <h2 class="text-center">BƯU CHÍNH CHUYỂN PHÁT TRONG NƯỚC</h2>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:insert="~{common/web/footer::footer}"></div>
+
+</body>
+</html>

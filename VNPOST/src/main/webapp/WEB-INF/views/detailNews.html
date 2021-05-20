@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/styleDetailNews.css}">
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert="~{common/web/header::header}"></div>
+
+<!--phần content-->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <!-- menu dọc -->
+                <div th:replace="~{/common/web/menu.html::menu}"></div>
+            </div>
+
+            <!--phần nội dung-->
+            <div class="col-lg-9 col-md-9 col-sm-9 detail-news" style="padding: 20px 0px;">
+                <h2 th:text="${detailBlog.title}"></h2>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p class="ngayDang" style="font-size: 14px;" ></p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-center icon">
+                        <a href="#">
+                            <i class="fa fa-facebook-square" style="color: #0066B1;"></i>
+                            <i class="fa fa-twitter-square" style="color: rgba(2,139,255,1);"></i>
+                            <i class="fa fa-linkedin-square" style="color: #0066B1;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="noiDung" th:utext="${detailBlog.content}"></div>
+
+                <div class="row"  style="color: #888888; font-size: 13px; font-weight: 400;">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>
+                            <i class="fa fa-eye"></i>
+                            Lượt xem: 184
+                        </p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p style="color: #1785E4; font-weight: bold; text-align: right;" th:text="${detailBlog.createdBy}"></p>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 22px;">Các tin khác</h2>
+                <hr style="margin: 5px; width: 17%;">
+
+                <ul class="list-group cacTinKhac">
+                    <li th:each="item : ${tinKhac}">
+                        <i class="fa fa-angle-double-right" style="font-size: 10px;"></i>
+                        <a th:href="@{/chi-tiet-tin-tuc/{id}(id=${item.id})}" th:text="${item.title}"> Bưu điện tỉnh Phú Yên triển khai kế hoạch kinh doanh bưu điện văn hóa xã năm 2021 </a>
+                        <span class="ngayDang">02/03/2021</span>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- footer -->
+<div th:insert="~{common/web/footer::footer}"></div>
+
+
+<script th:inline="javascript">
+    let createdDate = [[${detailBlog.createdDate}]];
+    let day = createdDate[8]+createdDate[9];
+    let month = createdDate[5]+createdDate[6];
+    let year = createdDate[0]+createdDate[1]+createdDate[2]+createdDate[3];
+    let dateFormat = day+'/'+month+'/'+year;
+    $('.ngayDang').text(dateFormat);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/styleDetailService.css}">
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert="~{common/web/header::header}"></div>
+
+<!--phần content-->
+<div class="container">
+    <div class="col-md-10 content-service">
+        <h1 class="text-center" th:text="${detailService.title}"></h1>
+        <hr>
+        <div th:utext="${detailService.content}"></div>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:insert="~{common/web/footer::footer}"></div>
+
+
+
+<!--<script th:inline="javascript">-->
+<!--    var listBrand =['LEXUS','AUDI','MAYBACK','FERRARI','TOYOTA'];-->
+<!--    //the array-->
+<!--    function printBtn() {-->
+<!--        for (var i = 0; i < listBrand.length; i++) {-->
+<!--            var btn = document.createElement("button");-->
+<!--            var t = document.createTextNode(listBrand[i]);-->
+<!--            btn.appendChild(t);-->
+<!--            document.body.appendChild(btn);-->
+<!--        }-->
+<!--    }-->
+
+<!--    printBtn();-->
+<!--</script>-->
+
+</body>
+</html>

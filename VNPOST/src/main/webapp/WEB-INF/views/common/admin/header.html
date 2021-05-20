@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="header">
+<div id="navbar" class="navbar navbar-default ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="/admin/trang-chu" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf"></i>
+                    Trang quản trị
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right collapse navbar-collapse" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <div sec:authorize="isAuthenticated()">
+                            Welcome <b><span sec:authentication="principal.fullName"></span></b>
+                            <!-- nếu chỉ sử dụng sec:authentication="name" thì nó chỉ show ra được username
+                                nhưng ở class CustomerUserDetails có thêm hàm getFullName() và sec:authentication="principal.fullName" => hiển thị fullName
+                             -->
+                        </div>
+
+                    </a>
+                <li class="light-blue dropdown-modal">
+                    <form th:action="@{/logout}" method="post">
+                        <button class="btn btn-danger" type="submit">
+                            <i class="ace-icon fa fa-power-off"></i>
+                            Thoát
+                        </button>
+                    </form>
+
+                </li>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

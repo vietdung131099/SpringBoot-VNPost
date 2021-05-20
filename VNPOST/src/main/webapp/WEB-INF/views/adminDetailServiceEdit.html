@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/templates/admin/assets/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+    <script th:href="@{/templates/admin/assets/js/ace-extra.min.js}" ></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/templates/admin/js/jquery-2.2.3.min.js}" />'></script>
+    <script th:src="@{/templates/admin/assets/js/jquery.2.1.1.min.js}" ></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!--    &lt;!&ndash; sweet alert &ndash;&gt;-->
+    <!--    <script th:src="@{/templates/admin/sweetalert/sweetalert2.min.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{/templates/admin/sweetalert/sweetalert2.min.css}" />-->
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+
+</head>
+<body class="no-skin">
+
+<!-- header -->
+<div id="navbar" class="navbar navbar-default ace-save-state" th:insert="~{common/admin/header.html::header}"></div>
+<!-- header -->
+
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<!-- menu -->
+<div id="sidebar" class="sidebar responsive ace-save-state" th:insert="~{/common/admin/menu.html::menu}"></div>
+<!-- menu -->
+
+<!-- main content -->
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/admin/trang-chu">Home</a>
+                </li>
+
+                <li>
+                    <a href='/admin/danh-sach/chi-tiet/dich-vu?page=1&size=10'>Danh sách</a>
+                </li>
+                <li class="active">Chỉnh sửa</li>
+            </ul><!-- /.breadcrumb -->
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal" id="formSubmit">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Mã dịch vụ : </label>
+                            <div class="col-sm-9">
+                                <input th:if="${detailService.id==0}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id" disabled/> <!-- thêm -->
+                                <input th:unless="${detailService.id==0}" type="text" placeholder="Id" class="form-control col-xs-10 col-sm-5" id="id" name="id" th:value="${detailService.id}"/> <!-- sửa -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Dịch vụ : </label>
+                            <div class="col-sm-9">
+                                <input type="text" placeholder="Title" class="form-control col-xs-10 col-sm-5" name="title" th:value="${detailService.title}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Thể loại dịch vụ :</label>
+                            <div class="col-sm-9">
+                                <select class="form-control col-xs-10 col-sm-5" name="service_company_id">
+                                    <option th:each="serviceCompany : ${serviceCompanies}" th:value="${serviceCompany.id}" th:text="${serviceCompany.name}" th:selected="${serviceCompany.id == detailService.serviceCompany.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" >Mô dịch vụ:</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control col-xs-10 col-sm-5" rows="5" cols="10" name="description" th:text="${detailService.description}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Ảnh :</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="col-xs-10 col-sm-5" id="uploadImage" name="thumbnail"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="content">Chi tiết dịch vụ :</label>
+                            <div class="col-sm-9">
+                                <textarea class="col-xs-10 col-sm-10" rows="5" cols="10" id="content" name="content" th:utext="${detailService.content}"></textarea>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-md-offset-3 col-md-9">
+
+                                <button class="btn btn-info" type="button" id="submit" th:if="${detailService.id==0}">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Thêm dịch vụ
+                                </button>
+                                <button class="btn btn-info" type="button" id="submit" th:unless="${detailService.id==0}">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Sửa dịch vụ
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+
+
+<!-- footer -->
+<div th:insert="~{common/admin/footer.html::footer}"></div>
+<!-- footer -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+
+<script th:inline="javascript">
+
+    let ckeditor = '';
+    let id = [[${detailService.id}]];
+
+    $( document ).ready(function() {
+        ckeditor = CKEDITOR.replace('content');
+    });
+
+    $('#submit').click(function (e){
+        e.preventDefault();
+        let data = {};
+        let dataForm = $('#formSubmit').serializeArray();
+        $.each(dataForm,function (i,v){
+            data[""+v.name+""] = v.value;
+        });
+        data['content'] = ckeditor.getData();
+        data['thumbnail'] = '/templates/web/img/'+dataArray['name'];
+
+        if(id===0){
+            addDetailService(data);
+        } else {
+            editDetailService(data);
+        }
+
+    });
+
+    function addDetailService(data){
+        $.ajax({
+           url: '/api/detail-service',
+           method: 'POST',
+           contentType: 'application/json',
+           data: JSON.stringify(data),
+           success: function () {
+               alert('add success');
+               window.location.href = '/admin/danh-sach/chi-tiet/dich-vu?page=1&size=10';
+           },
+           error: function () {
+               alert('add fail');
+           }
+        });
+    }
+
+    function editDetailService(data){
+        $.ajax({
+            url: '/api/detail-service',
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                alert('edit success');
+                window.location.href = '/admin/danh-sach/chi-tiet/dich-vu';
+            },
+            error: function () {
+                alert('edit fail');
+            }
+        });
+    }
+
+    /*xử lý upload file ảnh*/
+    var dataArray = {};  // lấy dữ liệu tên ảnh
+    $('#uploadImage').change(function (){
+        var files = $('#uploadImage')[0].files[0]; // lấy giá trị
+
+        if(files != undefined) { // có upload file
+            var base64 = '';
+            var reader = new FileReader(); // fileReader in jquery
+            reader.onload = function (e) {
+                dataArray['base64'] = e.target.result;
+                dataArray['name'] = files.name;
+                upload(dataArray);
+            };
+            reader.readAsDataURL(files);
+        }
+    });
+
+    function upload(data) {
+        $.ajax({
+            url : '/api/image',
+            type : 'POST',
+            contentType: 'application/json',
+            data : JSON.stringify(data),
+            success : function (res){
+                console.log(res);
+            },
+            error: function (res){
+                console.log(res);
+            }
+        });
+    }
+    <!-- kết thúc xử lý upload file ảnh -->
+
+</script>
+</div>
+
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery-ui.custom.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.ui.touch-punch.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.easypiechart.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.sparkline.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.pie.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/jquery.flot.resize.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace-elements.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/ace.min.js}" ></script>
+<script th:src="@{/templates/admin/assets/js/bootstrap.min.js}" ></script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/templates/admin/paging/jquery.twbsPagination.min.js}"></script>
+</body>
+</html>

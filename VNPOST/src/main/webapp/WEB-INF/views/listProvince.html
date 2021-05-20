@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/styleListProvince.css}">
+
+    <!-- thư viện phân trang -->
+    <script th:src="@{/templates/admin/paging/jquery.twbsPagination.js}" type="text/javascript"></script>
+
+    <link rel="stylesheet" th:href="@{/templates/web/css/fonts.googleapis.com.css}" />
+    <link rel="stylesheet" th:href="@{/templates/web/css/ace.min.css}" class="ace-main-stylesheet" id="main-ace-style" />
+
+</head>
+<body>
+
+<!--phần Header-->
+<div th:insert="~{common/web/header::header}"></div>
+
+<!--phần content-->
+<form id="formSubmit">
+    <div class="main-container ace-save-state" id="main-container">
+        <div class="main-content">
+            <div class="main-content-inner">
+                <div class="page-content">
+                    <div class="row" style="width: 1200px; margin: auto;">
+                        <div class="col-md-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div class="row" style="height: auto;">
+                                <div class="col-xs-12">
+                                    <table id="simple-table" class="table  table-bordered table-hover" style="width: 1200px; margin: auto;">
+                                        <thead>
+                                        <tr>
+                                            <th class="center">
+                                                <label class="pos-rel">
+                                                    <input type="checkbox" class="ace" />
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </th>
+                                            <th class="detail-col">Details</th>
+                                            <th>Mã</th>
+                                            <th>Tên</th>
+                                            <th class="hidden-480">Tên tiếng anh</th>
+
+                                            <th>Cấp</th>
+                                            <th class="hidden-480">Status</th>
+
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody th:each="item : ${cities.data}">
+                                        <tr>
+                                            <td class="center">
+                                                <label class="pos-rel">
+                                                    <input type="checkbox" class="ace city_id" th:value="${item.id}"/>
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </td>
+
+                                            <td class="center">
+                                                <div class="action-buttons">
+                                                    <a href="#" class="green bigger-140 show-details-btn city_id_btn" title="Show Details">
+                                                        <i class="ace-icon fa fa-angle-double-down"></i>
+                                                        <span class="sr-only">Details</span>
+                                                    </a>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <a href="#" th:text="${item.id}"></a>
+                                            </td>
+                                            <td th:text="${item.name}"></td>
+                                            <td class="hidden-480" th:text="${item.nameEnglish}"></td>
+                                            <td th:text="${item.level}"></td>
+
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+
+                                            <td>
+                                                <div class="hidden-sm hidden-xs btn-group">
+                                                    <button class="btn btn-xs btn-success">
+                                                        <i class="ace-icon fa fa-check bigger-120"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-xs btn-info">
+                                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-xs btn-danger">
+                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-xs btn-warning">
+                                                        <i class="ace-icon fa fa-flag bigger-120"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="hidden-md hidden-lg">
+                                                    <div class="inline pos-rel">
+                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                            <li>
+                                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+																			<span class="blue">
+																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
+																			</span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+																			<span class="green">
+																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																			</span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																			<span class="red">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																			</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="detail-row">
+                                            <td colspan="8">
+                                                <table class="table  table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <!--                                                            <td>Details</td>-->
+                                                        <td>Mã</td>
+                                                        <td>Tên</td>
+                                                        <td>Tên tiếng anh</td>
+                                                        <td>Cấp</td>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody class="districtRow">
+                                                    <!--                                                        <tr>-->
+                                                    <!--                                                            <td class="center">-->
+                                                    <!--                                                                <div class="action-buttons">-->
+                                                    <!--                                                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details">-->
+                                                    <!--                                                                        <i class="ace-icon fa fa-angle-double-down"></i>-->
+                                                    <!--                                                                        <span class="sr-only">Details</span>-->
+                                                    <!--                                                                    </a>-->
+                                                    <!--                                                                </div>-->
+                                                    <!--                                                            </td>-->
+                                                    <!--                                                            <td>Trương Việt Dũng</td>-->
+                                                    <!--                                                            <td>Kỹ thuật phần mềm 3</td>-->
+                                                    <!--                                                            <td>13/10/1999</td>-->
+                                                    <!--                                                            <td>Đại học</td>-->
+                                                    <!--                                                        </tr>-->
+
+                                                    <!--                                                        <tr class="detail-row">-->
+                                                    <!--                                                            <td colspan="8">-->
+                                                    <!--                                                                <table class="table  table-bordered table-hover">-->
+                                                    <!--                                                                    <tr>-->
+                                                    <!--                                                                        <td>Họ và tên 1</td>-->
+                                                    <!--                                                                        <td>Lớp 1</td>-->
+                                                    <!--                                                                        <td>Ngày sinh 1</td>-->
+                                                    <!--                                                                    </tr>-->
+                                                    <!--                                                                    <tr>-->
+                                                    <!--                                                                        <td>Trương việt Dũng</td>-->
+                                                    <!--                                                                        <td>Ktpm3</td>-->
+                                                    <!--                                                                        <td>13/10/1999</td>-->
+                                                    <!--                                                                    </tr>-->
+
+                                                    <!--                                                                </table>-->
+                                                    <!--                                                            </td>-->
+                                                    <!--                                                        </tr>-->
+                                                    </tbody>
+
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--chỗ phân trang -->
+                                    <nav aria-label="Page navigation" style="padding-top: 10px;">
+                                        <ul class="pagination" id="pagination"></ul>
+                                        <input type="hidden" id="page" name="page">
+                                        <input type="hidden" id="size" name="size">
+                                    </nav>
+                                </div><!-- /.span -->
+                            </div><!-- /.row -->
+                            <!-- PAGE CONTENT ENDS -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.page-content -->
+            </div>
+        </div><!-- /.main-content -->
+    </div><!-- /.main-container -->
+</form>
+
+
+
+
+<!-- footer -->
+<div th:insert="~{common/web/footer::footer}"></div>
+
+<script type="text/javascript">
+    jQuery(function($) {
+        //And for the first simple table, which doesn't have TableTools or dataTables
+        //select/deselect all rows according to table header checkbox
+        var active_class = 'active';
+        $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+            var th_checked = this.checked;//checkbox inside "TH" table header
+
+            $(this).closest('table').find('tbody > tr').each(function(){
+                var row = this;
+                if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+            });
+        });
+        /***************/
+        $('.show-details-btn').on('click', function(e) {
+            e.preventDefault();
+            $(this).closest('tr').next().toggleClass('open');
+        });
+        /***************/
+
+
+        $('.city_id_btn').click(function (event){
+            event.preventDefault();
+            let city_id = $("input:checkbox:checked").val();
+            $.ajax({
+                url: '/api/province',
+                method: 'post',
+                contentType: 'application/json',
+                data : city_id,
+                dataType: 'json',
+                success: function (data){
+                    var s ="";
+                    data.forEach(function (dt) {
+                        s += "<tr>"+
+                            "<td>"+dt.id+"</td>"+
+                            "<td>"+dt.name+"</td>"+
+                            "<td>"+dt.nameEnglish+"</td>"+
+                            "<td>"+dt.level+"</td>"+
+                            "</tr>";
+                    });
+                    $('.districtRow').html(s);
+                },
+                error : function (){
+
+                }
+            });
+        });
+    })
+
+
+    let currentPage = [[${cities.page}]];
+    $(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: 7,
+            visiblePages: 3,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+                if(currentPage != page){
+                    $('#page').val(page);
+                    $('#size').val(10);
+                    $('#formSubmit').submit();
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
